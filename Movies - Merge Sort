@@ -1,0 +1,217 @@
+
+/**
+ * Tester class that sorts Movie objects
+ *
+ * Brian Snyder
+ * 3/8/18
+ */
+public class testerClassV4 {
+    public static void main(String args[]) {
+        // declares array
+        Movie[] movies = new Movie[10];
+        // initializes elements of array
+        movies[0] = new Movie("Thor: Ragnarok", 2017, "Marvel Studios");
+        movies[1] = new Movie("Black Panther", 2017, "Marvel Studios");
+        movies[2] = new Movie("Wonder Woman", 2016, "Warner Bros. Pictures");
+        movies[3] = new Movie("Avatar", 2009, "Lightstorm Entertainment");
+        movies[4] = new Movie("Miracle", 2004, "Walt Disney Pictures");
+        movies[5] = new Movie("Star Wars: The Last Jedi", 2017, "Walt Disney Pictures");
+        movies[6] = new Movie("Captain America", 2011, "Marvel Studios");
+        movies[7] = new Movie("Iron Man", 2008, "Marvel Studios");
+        movies[8] = new Movie("The Avengers", 2012, "Marvel Studios");
+        movies[9] = new Movie("Jaws" ,1975, "Universal Pictures");
+        // prints results
+        System.out.println("    <<<< Before Sorting >>>> \n");
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by title in ascending order >>>>\n");
+        mergeSortTitle(movies, 0, movies.length-1);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by year in ascending order >>>>\n");
+        mergeSortYear(movies, 0, movies.length-1);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by studio in ascending order >>>>\n");
+        mergeSortStudio(movies, 0, movies.length-1);
+        printResults(movies);
+    }
+    // method that prints the array of movies
+    public static void printResults(Movie[] movies) {
+        for (int i = 0; i < movies.length; i++) {
+            System.out.println(movies[i]);
+        }
+    }
+    // method that recursively divides for sorting title
+    public static void mergeSortTitle(Movie[] movies, int low, int high) {
+        if (low == high) {
+            return;
+        }
+        int mid = (low + high) / 2;
+        mergeSortTitle(movies, low, mid);
+        mergeSortTitle(movies, mid+1, high);
+        mergeTitle(movies, low, mid, high);
+    }
+    // method that merges divisons and organizes them for title sorting
+    public static void mergeTitle(Movie[] movies, int low, int mid, int high) {
+        Movie[] temp = new Movie[high-low+1];
+        int i = low;
+        int j = mid + 1;
+        int n = 0;
+        while(i <= mid || j <= high) {
+            if (i > mid) {
+                temp[n] = movies[j];
+                j++;
+            } else if ( j > high) {
+                temp[n] = movies[i];
+                i++;
+            } else if (movies[i].getTitle().compareTo(movies[j].getTitle()) < 0) {
+                temp[n] = movies[i];
+                i++;
+            } else {
+                temp[n] = movies[j];
+                j++;
+            }
+            n++;
+        }  
+        for (int k = low; k <= high; k++) {
+            movies[k] = temp[k-low];
+        }
+    }
+    // method that recursively divides for sorting year
+    public static void mergeSortYear(Movie[] movies, int low, int high) {
+        if (low == high) {
+            return;
+        }
+        int mid = (low + high) / 2;
+        mergeSortYear(movies, low, mid);
+        mergeSortYear(movies, mid+1, high);
+        mergeYear(movies, low, mid, high);
+    }
+    // method that merges divisons and organizes them for title year
+    public static void mergeYear(Movie[] movies, int low, int mid, int high) {
+        Movie[] temp = new Movie[high-low+1];
+        int i = low;
+        int j = mid + 1;
+        int n = 0;
+        while(i <= mid || j <= high) {
+            if (i > mid) {
+                temp[n] = movies[j];
+                j++;
+            } else if ( j > high) {
+                temp[n] = movies[i];
+                i++;
+            } else if (movies[i].getYear() < movies[j].getYear()) {
+                temp[n] = movies[i];
+                i++;
+            } else {
+                temp[n] = movies[j];
+                j++;
+            }
+            n++;
+        }
+        for (int k = low; k <= high; k++) {
+            movies[k] = temp[k-low];
+        }
+    }
+    // method that recursively divides for sorting studio
+    public static void mergeSortStudio(Movie[] movies, int low, int high) {
+        if (low == high) {
+            return;
+        }
+        int mid = (low + high) / 2;
+        mergeSortStudio(movies, low, mid);
+        mergeSortStudio(movies, mid+1, high);
+        mergeStudio(movies, low, mid, high);
+    }
+    // method that merges divisons and organizes them for title sorting
+    public static void mergeStudio(Movie[] movies, int low, int mid, int high) {
+        Movie[] temp = new Movie[high-low+1];
+        int i = low;
+        int j = mid + 1;
+        int n = 0;
+        while(i <= mid || j <= high) {
+            if (i > mid) {
+                temp[n] = movies[j];
+                j++;
+            } else if ( j > high) {
+                temp[n] = movies[i];
+                i++;
+            } else if (movies[i].getStudio().compareTo(movies[j].getStudio()) < 0) {
+                temp[n] = movies[i];
+                i++;
+            } else {
+                temp[n] = movies[j];
+                j++;
+            }
+            n++;
+        }
+        for (int k = low; k <= high; k++) {
+            movies[k] = temp[k-low];
+        }
+    }
+}
+
+
+/**
+ * Purpose:
+ *
+ * @author (enter your name)
+ * @version (enter today's date)
+ *
+ */
+public class Movie
+{
+    // instance variables
+    private int year;
+    private String title;
+    private String studio;
+
+    // Constructor for objects of class Movie
+    public Movie(String title, int year, String studio)
+    {
+        // initialize instance variables
+        this.title = title;
+        this.year = year;
+        this.studio = studio;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+    
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+    
+    public String getStudio()
+    {
+        return studio;
+    }
+    
+    public void setStudio(String studio)
+    {
+        this.studio = studio;
+    }
+    
+    public int getYear()
+    {
+        return year;
+    }
+   
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+   
+    public String toString()
+    {
+        String str = String.format("%-30s %4d   %-20s", title, year, studio);
+        return str;
+    }
+}
