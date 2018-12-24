@@ -1,0 +1,141 @@
+
+ /**
+ * This class demonstrates the bubble sort algorithm.
+ *
+ * @author Margaret Hamilton
+ * @version 06/17/17
+ */
+
+public class TestListing1
+{
+    public static void main(String[] args)
+    {
+        HouseListing[] houses = new HouseListing[5];
+
+        houses[0] = new HouseListing("1892 Ocean Blue",   "Kissimmee", "FL", "34647", 212000);
+        houses[1] = new HouseListing("123 Any Street",    "St. Cloud", "FL", "34769", 79000);
+        houses[2] = new HouseListing("456 Cherry Lane",   "St. Cloud", "FL", "34772", 110000);
+        houses[3] = new HouseListing("339 Curry Ave",     "Kissimmee", "FL", "34647", 451000);
+        houses[4] = new HouseListing("612 Orange Street", "Orlando",   "FL", "32196", 88000);
+
+        System.out.println("    <<<< Before Sorting >>>> \n");
+        for(int i = 0; i < houses.length; i++)
+            System.out.println( houses[i] );
+
+        bubbleSort(houses);
+
+        System.out.println("\n     <<<< After Sorting >>>>");
+        System.out.println("<<<< by cost in ascending order >>>>\n");
+        for(int i = 0; i < houses.length; i++)
+            System.out.println( houses[i] );
+    }
+    
+    public static void bubbleSort(HouseListing[] a)
+    {
+        int out, in;
+        HouseListing temp;
+
+        for(out = a.length-1; out > 0; out--)  // outer loop (backward)
+        {  
+            for(in = 0; in < out; in++)        // inner loop (forward)
+            {
+                if( a[in].getCost() > a[in+1].getCost() )  
+                {     // swap elements
+                    temp = a[in + 1];
+                    a[in + 1] = a[in];
+                    a[in] = temp;
+                }
+            }
+            //Debugging Statements 
+            //uncomment to print the listings after each pass through the sort
+            //System.out.println("\nPass # " + out);
+            //for(HouseListing h : a)  System.out.printf("$%10.2f \n", h.getCost() );
+        }
+    }
+}
+
+
+ /**
+ * This class defines a House Listing object by 
+ * its address and cost.
+ *
+ * @author Margaret Hamilton
+ * @version 06/17/17
+ */
+public class HouseListing
+{
+    // instance variables
+    private String address;
+    private String city;
+    private String state;
+    private String zipCode;
+    private double cost;
+
+    // Constructor for objects of class HouseListing
+    public HouseListing(String address, String city, String state, String zipCode, double cost)
+    {
+        // initialize instance variables
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.cost = cost;
+    }
+    
+    public String toString()
+    {
+        String listing = address + "  " + city + ", " + state + " " + zipCode
+                         + "\n  Cost: " + String.format("$%,10.2f", cost) + "\n";
+        return listing; 
+    }
+    
+    public String getAddress()
+    {
+        return address;
+    }
+    
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+    
+    public String getCity()
+    {
+        return city;
+    }
+    
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+    
+    public String getState()
+    {
+        return state;
+    }
+    
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+    
+    public String getZip()
+    {
+        return zipCode;
+    }
+    
+    public void setZip(String zipCode)
+    {
+        this.zipCode = zipCode;
+    }
+    
+    public double getCost()
+    {
+        return cost;
+    }
+    
+    public void setCost(double cost)
+    {
+        this.cost = cost;
+    }
+}
