@@ -1,0 +1,211 @@
+
+/**
+ * Purpose: Using a list of movies you own or wish to see, sort them
+ * based on title, year created, or movie studio. 
+ * Use the insertion sort algorithm to reorder the collection as 
+ * requested in ascending or descending order.
+ *
+ * Brian Snyder
+ * 3/8/17
+ *
+ */
+public class Movie
+{
+    // instance variables
+    private int year;
+    private String title;
+    private String studio;
+
+    // Constructor for objects of class Movie
+    public Movie(String title, int year, String studio)
+    {
+        // initialize instance variables
+        this.title = title;
+        this.year = year;
+        this.studio = studio;
+    }
+    // getter method for title
+    public String getTitle()
+    {
+        return title;
+    }
+    // setter method for title
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+    // getter method for studio
+    public String getStudio()
+    {
+        return studio;
+    }
+    // setter method for studio
+    public void setStudio(String studio)
+    {
+        this.studio = studio;
+    }
+    // getter method for year
+    public int getYear()
+    {
+        return year;
+    }
+    // setter method for year
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+    // overridden method of toString
+    public String toString()
+    {
+        String str = String.format("%-30s %4d   %-20s", title, year, studio);
+        return str;
+    }
+}
+
+
+/**
+ * Tester class that sorts Movie objects
+ *
+ * Brian Snyder
+ * 3/8/18
+ */
+public class testerClassV2 {
+    public static void main(String args[]) {
+        // declares array
+        Movie[] movies = new Movie[10];
+        // initializes elements of array
+        movies[0] = new Movie("Thor: Ragnarok", 2017, "Marvel Studios");
+        movies[1] = new Movie("Black Panther", 2017, "Marvel Studios");
+        movies[2] = new Movie("Wonder Woman", 2016, "Warner Bros. Pictures");
+        movies[3] = new Movie("Avatar", 2009, "Lightstorm Entertainment");
+        movies[4] = new Movie("Miracle", 2004, "Walt Disney Pictures");
+        movies[5] = new Movie("Star Wars: The Last Jedi", 2017, "Walt Disney Pictures");
+        movies[6] = new Movie("Captain America", 2011, "Marvel Studios");
+        movies[7] = new Movie("Iron Man", 2008, "Marvel Studios");
+        movies[8] = new Movie("The Avengers", 2012, "Marvel Studios");
+        movies[9] = new Movie("Jaws" ,1975, "Universal Pictures");
+        // prints results
+        System.out.println("    <<<< Before Sorting >>>> \n");
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by title in ascending order >>>>\n");
+        movies = sortTitle(movies, 1);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by title in descending order >>>>\n");
+        movies = sortTitle(movies, 2);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by yeat in ascending order >>>>\n");
+        movies = sortYear(movies, 1);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by year in descending order >>>>\n");
+        movies = sortYear(movies, 2);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by studio in ascending order >>>>\n");
+        movies = sortStudio(movies, 1);
+        printResults(movies);
+        
+        System.out.println("\n    <<<< After Sorting >>>>");
+        System.out.println("<<<< by studio in descending order >>>>\n");
+        movies = sortStudio(movies, 2);
+        printResults(movies);
+    }
+    // method that prints the array of movies
+    public static void printResults(Movie[] movies) {
+        for (int i = 0; i < movies.length; i++) {
+            System.out.println(movies[i]);
+        }
+    }
+    // method that returns sorted array based off title
+    public static Movie[] sortTitle(Movie[] movies, int num) {
+        Movie[] dest = new Movie[movies.length];
+        for (int i = 0; i < movies.length; i++) {
+            Movie next = movies[i];
+            int insertIndex = 0;
+            int k = i;
+            while (k > 0 && insertIndex == 0) {
+                if (num == 1) {
+                    if (next.getTitle().compareTo(dest[k-1].getTitle()) > 0) {
+                        insertIndex = k;
+                    } else {
+                        dest[k] = dest[k-1];
+                    }
+                    k--;
+                } else if (num == 2) {
+                    if (next.getTitle().compareTo(dest[k-1].getTitle()) < 0) {
+                        insertIndex = k;
+                    } else {
+                        dest[k] = dest[k-1];
+                    }
+                    k--;
+                }
+            }
+            dest[insertIndex] = next;
+        }
+        return dest;
+    }
+    // method that returns sorted array based off year 
+    public static Movie[] sortYear(Movie[] movies, int num) {
+        Movie[] dest = new Movie[movies.length];
+        for (int i = 0; i < movies.length; i++) {
+            Movie next = movies[i];
+            int insertIndex = 0;
+            int k = i;
+            while (k > 0 && insertIndex == 0) {
+                if (num == 1) {
+                    if (next.getYear() > dest[k-1].getYear()) {
+                        insertIndex = k;
+                    } else {
+                        dest[k] = dest[k-1];
+                    }
+                    k--;
+                } else if (num == 2) {
+                    if (next.getYear() < dest[k-1].getYear()) {
+                        insertIndex = k;
+                    } else {
+                        dest[k] = dest[k-1];
+                    }
+                    k--;
+                }
+            }
+            dest[insertIndex] = next;
+        }
+        return dest;
+    }
+    // method that returns sorted array based off studio
+    public static Movie[] sortStudio(Movie[] movies, int num) {
+        Movie[] dest = new Movie[movies.length];
+        for (int i = 0; i < movies.length; i++) {
+            Movie next = movies[i];
+            int insertIndex = 0;
+            int k = i;
+            while (k > 0 && insertIndex == 0) {
+                if (num == 1) {
+                    if (next.getStudio().compareTo(dest[k-1].getStudio()) > 0) {
+                        insertIndex = k;
+                    } else {
+                        dest[k] = dest[k-1];
+                    }
+                    k--;
+                } else if (num == 2) {
+                    if (next.getStudio().compareTo(dest[k-1].getStudio()) < 0) {
+                        insertIndex = k;
+                    } else {
+                        dest[k] = dest[k-1];
+                    }
+                    k--;
+                }
+            }
+            dest[insertIndex] = next;
+        }
+        return dest;
+    }
+}
